@@ -28,9 +28,14 @@
                   <v-list>
                   </v-list>             
                   </v-flex>
-                  <v-card v-if="getHazards!=null">
+                  <v-card v-if="getHazards!=null && getHazards[0] != undefined">
                   <h4>{{ getHazards[0].title }}</h4>
                   <p>Source: PredictHQ API</p>
+                  </v-card>
+                  <v-card v-if="getNews!=null && getNews[0] != undefined" @click='open(getNews[0].url)'>
+                  <h4>{{ getNews[0].title }}</h4>
+                  <p>{{ getNews[0].description }}</p>
+                  <p>Source: {{ getNews[0].source.name }}</p>
                   </v-card>
                   <v-flex v-if="getProvince == 'Dem. Rep. Congo'">                 
                   <v-list>
@@ -78,6 +83,9 @@
 
             };
         },
+        mounted(){
+          this.$store.dispatch('setNews').then(() => {});
+        },
         methods: {
           toggleHistorico() {
             this.$store.commit('toggleHistorico');
@@ -99,6 +107,7 @@
                 'isFuturo',
                 'getProvince',
                 'getHazards',
+                'getNews'
             ]),
         },
     }

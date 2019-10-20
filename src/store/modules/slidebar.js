@@ -13,6 +13,8 @@ export default {
             'World hunger is still not going down after three years and obesity is still growing',
         ],
         hazards: null,
+        news: null,
+        country: null
     },
     getters: {
         isHistorico: state => state.historico,
@@ -21,6 +23,7 @@ export default {
         getProvince: state => state.province,
         getSlides: state => state.slides,
         getHazards: state => state.hazards,
+        getNews: state => state.news,
     },
     mutations: {
         toggleHistorico(state) {
@@ -43,7 +46,10 @@ export default {
         },
         setHazards(state, hazards) {
             state.hazards = hazards;
-        }
+        },
+        setNews(state, news) {
+            state.news = news;
+        },
     },
     actions: {
         setCountry: ({ commit }, country) => new Promise((resolve, reject) => {
@@ -55,5 +61,18 @@ export default {
                 reject(error);
             });
         }),
+        setNews: ({ commit }, country) => new Promise((resolve, reject) => {
+            let url = 'http://localhost:5000/news';
+            if (country) {
+                url += '?country=' + country.toLowerCase()
+            }
+            Axios.get(url).then((response) => {
+                commit('setNews', response.data.articles);
+                resolve(response);
+            })
+            .catch((error) => {
+                reject(error);
+            });
+        }),        
     },
 }
