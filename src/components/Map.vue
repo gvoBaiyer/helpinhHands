@@ -46,6 +46,7 @@ export default {
 
       province.click(e => {        
         const mapId = e.target.attributes["map-id"].value;
+        document.getElementById(e.target.attributes["id"].value).fill="#500000";
         const title = e.target.attributes.title.value;      
         this.$emit("mapClick", { mapId, title });
       });
@@ -64,6 +65,10 @@ export default {
     transition: all 0.2s ease-in-out;
 
     &:hover {
+      fill: #004262;
+    }
+
+    &:visited {
       fill: #004262;
     }
 
